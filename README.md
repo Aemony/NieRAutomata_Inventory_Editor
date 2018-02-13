@@ -44,4 +44,6 @@ For use with this fantastic resource: https://docs.google.com/spreadsheets/d/1HQ
 
 ## License
 
-See [LICENSE](LICENSE).
+The code for the editor is covered by [LICENSE](LICENSE).
+
+ObjectListView is covered by GNU GPLv3: https://sourceforge.net/p/objectlistview/code/HEAD/tree/cs/branches/v2.3/COPYING
