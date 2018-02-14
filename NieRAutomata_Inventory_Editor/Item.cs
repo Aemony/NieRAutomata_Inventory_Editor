@@ -21,11 +21,11 @@ namespace NieRAutomata_Inventory_Editor
         public int Slot { get; set; }
         public UInt32 ID { get; set; }
         public UInt32 Amount { get; set; }
+        public UInt32 Status { get; set; }
         public Boolean Enabled
         {
             get => (Status == 458752) ? true : false;
-            set => throw new NotImplementedException();
+            set => Status = (value == true) ? 458752 : 4294967295;
         }
-        public UInt32 Status { get; set; }
     }
 }

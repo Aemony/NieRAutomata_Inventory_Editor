@@ -35,6 +35,7 @@
             this.olvActiveColumnEnabled = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvActiveColumnID = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvActiveColumnAmount = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvActiveColumnStatus = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.label1 = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -44,11 +45,10 @@
             this.olvInactiveColumnEnabled = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvInactiveColumnID = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvInactiveColumnAmount = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvInactiveColumnStatus = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.buttonResetActive = new System.Windows.Forms.Button();
             this.buttonResetCorpse = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.olvInactiveColumnStatus = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.olvActiveColumnStatus = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.buttonExport = new System.Windows.Forms.Button();
             this.buttonImport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.fastObjectListView1)).BeginInit();
@@ -110,12 +110,17 @@
             // 
             this.olvActiveColumnEnabled.AspectName = "Enabled";
             this.olvActiveColumnEnabled.AspectToStringFormat = "";
+            this.olvActiveColumnEnabled.CellVerticalAlignment = System.Drawing.StringAlignment.Center;
+            this.olvActiveColumnEnabled.CheckBoxes = true;
             this.olvActiveColumnEnabled.Text = "Enabled";
+            this.olvActiveColumnEnabled.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.olvActiveColumnEnabled.Width = 55;
             // 
             // olvActiveColumnID
             // 
             this.olvActiveColumnID.AspectName = "ID";
+            this.olvActiveColumnID.AutoCompleteEditor = false;
+            this.olvActiveColumnID.AutoCompleteEditorMode = System.Windows.Forms.AutoCompleteMode.None;
             this.olvActiveColumnID.CellEditUseWholeCell = true;
             this.olvActiveColumnID.Text = "Item ID";
             this.olvActiveColumnID.Width = 80;
@@ -126,6 +131,12 @@
             this.olvActiveColumnAmount.CellEditUseWholeCell = true;
             this.olvActiveColumnAmount.Text = "Amount";
             this.olvActiveColumnAmount.Width = 50;
+            // 
+            // olvActiveColumnStatus
+            // 
+            this.olvActiveColumnStatus.AspectName = "Status";
+            this.olvActiveColumnStatus.Text = "Status";
+            this.olvActiveColumnStatus.Width = 80;
             // 
             // label1
             // 
@@ -200,7 +211,10 @@
             // olvInactiveColumnEnabled
             // 
             this.olvInactiveColumnEnabled.AspectName = "Enabled";
+            this.olvInactiveColumnEnabled.CellVerticalAlignment = System.Drawing.StringAlignment.Center;
+            this.olvInactiveColumnEnabled.CheckBoxes = true;
             this.olvInactiveColumnEnabled.Text = "Enabled";
+            this.olvInactiveColumnEnabled.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.olvInactiveColumnEnabled.Width = 55;
             // 
             // olvInactiveColumnID
@@ -216,6 +230,12 @@
             this.olvInactiveColumnAmount.CellEditUseWholeCell = true;
             this.olvInactiveColumnAmount.Text = "Amount";
             this.olvInactiveColumnAmount.Width = 50;
+            // 
+            // olvInactiveColumnStatus
+            // 
+            this.olvInactiveColumnStatus.AspectName = "Status";
+            this.olvInactiveColumnStatus.Text = "Status";
+            this.olvInactiveColumnStatus.Width = 80;
             // 
             // buttonResetActive
             // 
@@ -247,18 +267,6 @@
             this.label4.Size = new System.Drawing.Size(227, 13);
             this.label4.TabIndex = 9;
             this.label4.Text = "Work in progress! USE AT YOUR OWN RISK!";
-            // 
-            // olvInactiveColumnStatus
-            // 
-            this.olvInactiveColumnStatus.AspectName = "Status";
-            this.olvInactiveColumnStatus.Text = "Status";
-            this.olvInactiveColumnStatus.Width = 80;
-            // 
-            // olvActiveColumnStatus
-            // 
-            this.olvActiveColumnStatus.AspectName = "Status";
-            this.olvActiveColumnStatus.Text = "Status";
-            this.olvActiveColumnStatus.Width = 80;
             // 
             // buttonExport
             // 
