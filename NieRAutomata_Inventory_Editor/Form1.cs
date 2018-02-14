@@ -37,25 +37,24 @@ namespace NieRAutomata_Inventory_Editor
 
         private void buttonOpen_Click(object sender, EventArgs e)
         {
-            bool doOpen = true;
+            DialogResult dialogResult = DialogResult.Yes;
 
-            if(_filePath == null && fastObjectListView1.GetItemCount() > 0)
+            if (_filePath == null && fastObjectListView1.GetItemCount() > 0)
             {
-                DialogResult dialogResult = MessageBox.Show("You currently have an imported inventory list loaded. Opening a save file will overwrite the imported list. Are you sure you want to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
-                
-                if(dialogResult == DialogResult.No)
-                {
-                    doOpen = false;
-                }
+                dialogResult = MessageBox.Show("You already have an inventory list imported. Opening a slot file will discard all unsaved changes.\n\nAre you sure you want to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+            }
+            else if (_filePath != null)
+            {
+                dialogResult = MessageBox.Show("You already have a file opened. Opening another will discard all unsaved changes.\n\nAre you sure you want to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
             }
 
-            if(doOpen)
+            if (dialogResult == DialogResult.Yes)
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog
                 {
                     InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\My Games\\NieR_Automata",
                     Filter = "Save File (SlotData_#.dat)|SlotData_*.dat",
-                    Title = "Open SlotData_#.dat file"
+                    Title = "Open slot file"
                 };
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -66,9 +65,6 @@ namespace NieRAutomata_Inventory_Editor
                     // Ensure that the view is empty
                     fastObjectListView1.ClearObjects();
                     fastObjectListView2.ClearObjects();
-                    // Empty the imported inventory list, if one is loaded
-                    _byteInventoryImportedActive = null;
-                    _byteInventoryImportedCorpse = null;
 
                     // Read the file
                     using (Stream stream = openFileDialog.OpenFile())
@@ -115,25 +111,29 @@ namespace NieRAutomata_Inventory_Editor
                     buttonResetActive.Enabled = true;
                     buttonResetCorpse.Enabled = true;
                     buttonExport.Enabled = true;
+
+                    // Finally update the background stuff to reflect the new file
+                    _byteInventoryImportedActive = null;
+                    _byteInventoryImportedCorpse = null;
+                    textBoxInventoryPath.Text = "No inventory list imported...";
                 }
             }
         }
 
         private void buttonResetActive_Click(object sender, EventArgs e)
         {
-            bool doReset = true;
+            DialogResult dialogResult;
 
-            if (_byteInventoryImportedActive != null)
+            if (_byteInventoryImportedCorpse != null)
             {
-                DialogResult dialogResult = MessageBox.Show("You currently have an imported inventory list active. Resetting will discard the imported inventory list and any changes you might have made. Are you sure you want to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
-
-                if (dialogResult == DialogResult.No)
-                {
-                    doReset = false;
-                }
+                dialogResult = MessageBox.Show("You currently have an imported inventory list active. Resetting will discard the imported inventory list and any unsaved changes.\n\nAre you sure you want to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+            }
+            else
+            {
+                dialogResult = MessageBox.Show("Are you sure you want to reset your changes?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
             }
 
-            if (doReset)
+            if (dialogResult == DialogResult.Yes)
             {
                 // Empty the imported inventory list, if one is loaded
                 _byteInventoryImportedActive = null;
@@ -150,24 +150,27 @@ namespace NieRAutomata_Inventory_Editor
                     };
                 }
                 fastObjectListView1.SetObjects(_itemInventoryActive);
+
+                if (_byteInventoryImportedActive == null && _byteInventoryImportedCorpse == null)
+                {
+                    textBoxInventoryPath.Text = "No inventory list imported...";
+                }
             }
         }
 
         private void buttonResetCorpse_Click(object sender, EventArgs e)
         {
-            bool doReset = true;
+            DialogResult dialogResult;
 
             if (_byteInventoryImportedCorpse != null)
             {
-                DialogResult dialogResult = MessageBox.Show("You currently have an imported inventory list active. Resetting will discard the imported inventory list and any changes you might have made. Are you sure you want to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
-
-                if (dialogResult == DialogResult.No)
-                {
-                    doReset = false;
-                }
+                dialogResult = MessageBox.Show("You currently have an imported inventory list active. Resetting will discard the imported inventory list and and any unsaved changes.\n\nAre you sure you want to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+            } else
+            {
+                dialogResult = MessageBox.Show("Are you sure you want to reset your changes?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
             }
 
-            if (doReset)
+            if (dialogResult == DialogResult.Yes)
             {
                 // Empty the imported inventory list, if one is loaded
                 _byteInventoryImportedCorpse = null;
@@ -184,24 +187,26 @@ namespace NieRAutomata_Inventory_Editor
                     };
                 }
                 fastObjectListView2.SetObjects(_itemInventoryCorpse);
+
+                if (_byteInventoryImportedActive == null && _byteInventoryImportedCorpse == null)
+                {
+                    textBoxInventoryPath.Text = "No inventory list imported...";
+                }
             }
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            bool doSave = true;
+            DialogResult dialogResult;
 
             if (_byteInventoryImportedActive != null || _byteInventoryImportedCorpse != null)
             {
-                DialogResult dialogResult = MessageBox.Show("You currently have an imported inventory list active that have overwritten the original inventory list of the loaded save. Saving will make the change permanent. Are you sure you want to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
-
-                if (dialogResult == DialogResult.No)
-                {
-                    doSave = false;
-                }
+                dialogResult = MessageBox.Show("You currently have an imported inventory list active that have overwritten the original inventory list of the opened slot file. Saving will make the change permanent.\n\nAre you sure you want to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+            } else {
+                dialogResult = MessageBox.Show("Are you sure you want to save your changes to the slot file?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
             }
 
-            if(doSave)
+            if(dialogResult == DialogResult.Yes)
             {
                 byte[] byteInventoryChanged = new byte[_intBlockLength];
 
@@ -238,6 +243,7 @@ namespace NieRAutomata_Inventory_Editor
                 _byteInventory = byteInventoryChanged;
                 _byteInventoryImportedActive = null;
                 _byteInventoryImportedCorpse = null;
+                textBoxInventoryPath.Text = "No inventory list imported...";
 
                 MessageBox.Show("Changes were saved!", "Save complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -289,19 +295,17 @@ namespace NieRAutomata_Inventory_Editor
 
         private void buttonImport_Click(object sender, EventArgs e)
         {
-            bool doImport = true;
+            DialogResult dialogResult = DialogResult.Yes;
 
             if (_filePath != null && fastObjectListView1.GetItemCount() > 0)
             {
-                DialogResult dialogResult = MessageBox.Show("You currently have a save slot data file opened. Importing an inventory list will overwrite the inventory list of the loaded save file. Saving will make that change permanent. Are you sure you want to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
-
-                if (dialogResult == DialogResult.No)
-                {
-                    doImport = false;
-                }
+                dialogResult = MessageBox.Show("You already have a slot file opened. Importing an inventory list will overwrite the one from the slot file and discard any unsaved changes.\n\nAre you sure you want to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+            } else if (_byteInventoryImportedActive != null || _byteInventoryImportedCorpse != null)
+            {
+                dialogResult = MessageBox.Show("You already have an inventory list imported. Importing another will discard any unsaved changes.\n\nAre you sure you want to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
             }
 
-            if(doImport)
+            if(dialogResult == DialogResult.Yes)
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog
                 {
@@ -374,10 +378,14 @@ namespace NieRAutomata_Inventory_Editor
 
                         // Enable the buttons
                         buttonExport.Enabled = true;
+
+                        // List the path
+                        textBoxInventoryPath.Text = openFileDialog.FileName;
+                        textBoxInventoryPath.SelectionStart = openFileDialog.FileName.Length;
                     }
                     else
                     {
-                        MessageBox.Show("Wrong size of the file you are trying to import!", "Import canceled!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Wrong size of the file you are trying to import!", "Import canceled", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
