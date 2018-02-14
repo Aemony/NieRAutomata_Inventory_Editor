@@ -1,50 +1,51 @@
 # NieR: Automata - Inventory Editor
-Work in progress inventory editor for NieR:Automata. **This is a work in progress** so expect issues. Please be aware that I am making random assumptions while creating this editor, which might or might not be true. For example, the "inactive/corpse" inventory is something I haven't actually verified. It was, however, the only explanation I could come up with why the 512 inventory block suddenly split off at the half of it.
+**Work in progress** inventory editor for NieR:Automata. For use with this fantastic resource: https://docs.google.com/spreadsheets/d/1HQc9XkppRgNEFQ5zLgQW6BTqyFrPf2P6DxKz8x2S2oU/
 
 **MAKE BACKUPS BEFORE USING THIS!**
 
-For use with this fantastic resource: https://docs.google.com/spreadsheets/d/1HQc9XkppRgNEFQ5zLgQW6BTqyFrPf2P6DxKz8x2S2oU/
+![Screenshot of the editor](screenshot.png "Screenshot of the editor")
+
+Please be aware that I am making random assumptions while creating this editor, which might or might not be true. For example, the "inactive/corpse" inventory is something I haven't actually spent much time to verify. It was, however, the only explanation I could come up with why the 512 inventory block suddenly split in two at the half of it.
 
 ## Features
 
 * Edit your inventory "easily".
-* Export/Import inventory lists between saves or players.
+* Export/import inventory lists between saves or players.
 
 ## Requirement
 
 * .NET Framework 4
 
-## Known Issues
-
-* Can't make an item slot "unused" since the middleware I'm using for the gridview writes 99999999 instead.
-* No telling what havoc this editor can cause.
-
 ## Usage
 
 1. Download the editor from [the release section](https://github.com/Idearum/NieRAutomata_Inventory_Editor/releases).
 
-2. Run the tool and open one of the SlotData_#.dat files of NieR:Automata:
+2. Run the tool and open one of the slot data files of NieR:Automata:
 
-   - **SlotData_#.dat** stores slot progression for slot 1-3.
-   
-3. Use this Google spreadsheet to locate the appropriate item ID: https://docs.google.com/spreadsheets/d/1HQc9XkppRgNEFQ5zLgQW6BTqyFrPf2P6DxKz8x2S2oU/
+   - **SlotData_0.dat** - save slot #1
+   - **SlotData_1.dat** - save slot #2
+   - **SlotData_2.dat** - save slot #3
 
-4. Double click on a cell to change the value of it.
+3. Double click on a cell to change the value of it.
 
-5. The editor is basic, so for now you'll have to manually change the "Status" of a row for it to show up in-game:
+4. Use this Google spreadsheet to locate the appropriate item ID to add new items: https://docs.google.com/spreadsheets/d/1HQc9XkppRgNEFQ5zLgQW6BTqyFrPf2P6DxKz8x2S2oU/
 
-    **458752** - "Active Item Slot" ? To be determined...
-    
-    **4294967295** - "Unused Item Slot" ? To be determined...
-    
-6. Click on Save when ready to save the file.
+5. Click on **Save slot** to save your changes to the slot data file.
 
-## Preview
+## The "Status" column
 
-![Screenshot of the editor](screenshot.png "Screenshot of the editor")
+This is the actual "status" value stored for the item slot in the file, in decimal, of course. The **Enabled** column is a wrapper around this, that shows *true* if Status == 458752, or *false* if different.
+
+The reason for this is because I still haven't fully figured that section of the item slot out. For now 458752 seems to be an "active" item slot, while 4294967295 is an inactive one, however this assumption might be wrong. Therefor the Status column is exposed where the actual value of the item slot can be shown and edited if necessary.
+
+## Known Issues
+
+* No telling what havoc this editor can cause.
+
+* The value in the Status column will be set to 9999,9999 if trying to edit an unused/disabled item slot. This is because the ObjectListView module I am using can't handle values above 9999,9999, so an out of range exception is thrown. The issue can be worked around by enabling/disabling the item slot using the Enabled column instead.
 
 ## License
 
 The code for the editor is covered by [LICENSE](LICENSE).
 
-ObjectListView is covered by GNU GPLv3: https://sourceforge.net/p/objectlistview/code/HEAD/tree/cs/branches/v2.3/COPYING
+Uses [ObjectListView](http://objectlistview.sourceforge.net/cs/index.html), which is licensed as [GNU GPLv3](https://sourceforge.net/p/objectlistview/code/HEAD/tree/cs/branches/v2.3/COPYING).
