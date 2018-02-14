@@ -11,6 +11,7 @@ Please be aware that I am making random assumptions while creating this editor, 
 
 * Edit your inventory "easily".
 * Export/import inventory lists between saves or players.
+* Automatically creates a backup of the slot file when saving (*does not apply for exporting inventory lists*)
 
 ## Requirement
 
