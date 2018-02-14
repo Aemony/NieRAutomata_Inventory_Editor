@@ -8,6 +8,7 @@ For use with this fantastic resource: https://docs.google.com/spreadsheets/d/1HQ
 ## Features
 
 * Edit your inventory "easily".
+* Export/Import inventory lists between saves or players.
 
 ## Requirement
 
