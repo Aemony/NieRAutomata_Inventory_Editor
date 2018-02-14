@@ -3,9 +3,10 @@
 
 **MAKE BACKUPS BEFORE USING THIS!**
 
+Please be aware that I am making random assumptions while creating this editor, which might or might not be true. For example, the "inactive/corpse" inventory is something I haven't actually spent much time to verify. It was, however, the only explanation I could come up with why the 512 inventory block suddenly split in two at the half of it.
+
 ![Screenshot of the editor](screenshot.png "Screenshot of the editor")
 
-Please be aware that I am making random assumptions while creating this editor, which might or might not be true. For example, the "inactive/corpse" inventory is something I haven't actually spent much time to verify. It was, however, the only explanation I could come up with why the 512 inventory block suddenly split in two at the half of it.
 
 ## Features
 
